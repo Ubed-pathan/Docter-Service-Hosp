@@ -1,0 +1,18 @@
+services:
+  mongodb:
+    image: bitnami/mongodb:6.0
+    container_name: mongodb
+    ports:
+        - "27077:27017"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+
+
+volumes:
+  mongodb_data:
+
