@@ -3,16 +3,17 @@ services:
     image: bitnami/mongodb:6.0
     container_name: mongodb
     ports:
-        - "27077:27017"
+      - "27077:27017"
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=localhost
+      - MONGODB_ROOT_PASSWORD=admin
+      - MONGODB_USERNAME=admin
+      - MONGODB_PASSWORD=admin
+      - MONGODB_DATABASE=doctordb
     volumes:
       - mongodb_data:/bitnami/mongodb
 
-
 volumes:
   mongodb_data:
-
