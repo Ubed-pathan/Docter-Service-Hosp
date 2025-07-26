@@ -9,6 +9,8 @@ spring:
 
 server:
   port: ${PORT:8080}
+  servlet:
+    context-path: /doctor
 
 eureka:
   client:
