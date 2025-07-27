@@ -47,4 +47,11 @@ public class DocterRegisterService {
         docterRegisterRepository.save(docterRegisterEntity);
 
     }
+
+    public boolean isDocterExists(String docterId) {
+        if (docterId == null || docterId.isEmpty()) {
+            throw new IllegalArgumentException("Doctor ID cannot be null or empty.");
+        }
+        return docterRegisterRepository.existsById(docterId);
+    }
 }

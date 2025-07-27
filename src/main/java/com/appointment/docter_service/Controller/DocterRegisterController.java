@@ -5,10 +5,7 @@ import com.appointment.docter_service.Service.DocterRegisterService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping()
@@ -28,6 +25,17 @@ public class DocterRegisterController {
             e.printStackTrace(); // 🔍 Print full error
             return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
 //            return ResponseEntity.internalServerError().body("Something went wrong.");
+        }
+    }
+
+    @GetMapping("/exists/{docterId}")
+    public ResponseEntity<?> isDocterExist(@PathVariable String docterId) {
+        try {
+            boolean exists = docterRegisterService.isDocterExists(docterId);
+            return ResponseEntity.ok(exists);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
         }
     }
 }
