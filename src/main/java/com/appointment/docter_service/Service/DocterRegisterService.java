@@ -53,5 +53,6 @@ public class DocterRegisterService {
             throw new IllegalArgumentException("Doctor ID cannot be null or empty.");
         }
         return docterRegisterRepository.existsById(docterId);
+
     }
 }
