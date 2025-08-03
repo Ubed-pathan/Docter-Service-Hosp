@@ -16,6 +16,7 @@ public class DocterRegisterController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid DocterRegisterDto docterDto) {
+        System.out.println("Received registration request: " + docterDto.toString());
         try {
             docterRegisterService.register(docterDto); // Service does logic, throws error if needed
             return ResponseEntity.ok("Docter registered successfully.");
