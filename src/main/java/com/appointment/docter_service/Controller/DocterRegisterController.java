@@ -2,8 +2,10 @@ package com.appointment.docter_service.Controller;
 
 import com.appointment.docter_service.Dtos.DocterRegisterDto;
 import com.appointment.docter_service.Service.DocterRegisterService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

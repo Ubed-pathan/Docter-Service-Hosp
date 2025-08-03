@@ -2,7 +2,7 @@ package com.appointment.docter_service.Service;
 
 import com.appointment.docter_service.Dtos.DocterRegisterDto;
 import com.appointment.docter_service.Entities.DocterRegisterEntity;
-import com.appointment.docter_service.Repository.DocterRegisterRepository;
+import com.appointment.docter_service.Repository.DoctorRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DocterRegisterService {
     
-        private DocterRegisterRepository docterRegisterRepository;
+        private DoctorRepository docterRegisterRepository;
         private PasswordEncoder passwordEncoder;
 
 
