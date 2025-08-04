@@ -39,7 +39,7 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setSubject(userId)
-                .setIssuer("user-service")
+                .setIssuer("doctor-service")
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plusSeconds(3600 * 24 * 30))) // 30 days
                 .addClaims(Map.of(
@@ -47,7 +47,7 @@ public class JwtUtil {
                         "email", email,
                         "role", role
                 ))
-                .setHeaderParam("kid", "user-service-key") // Key ID for API Gateway
+                .setHeaderParam("kid", "doctor-service-key") // Key ID for API Gateway
                 .signWith(privateKey, SignatureAlgorithm.RS256)
                 .compact();
     }
