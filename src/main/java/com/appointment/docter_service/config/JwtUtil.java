@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    @Value("${JWT_PRIVATE_KEY}")
+    @Value("${DOCTOR_JWT_PRIVATE_KEY}")
     private String base64PrivateKey;
 
     private PrivateKey privateKey;

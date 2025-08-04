@@ -20,6 +20,9 @@ target/
 *.ipr
 .env
 .log
+*.pem
+*.der
+*.txt
 
 ### NetBeans ###
 /nbproject/private/
