@@ -1,9 +1,8 @@
 package com.appointment.docter_service.Dtos;
 
 import jakarta.validation.constraints.*;
-import java.util.List;
 
-public record DocterRegisterDto(
+public record DoctorRegisterDto(
 
         @NotBlank(message = "First name is required")
         String firstName,

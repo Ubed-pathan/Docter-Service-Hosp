@@ -1,23 +1,21 @@
 package com.appointment.docter_service.Controller;
 
-import com.appointment.docter_service.Dtos.DocterRegisterDto;
-import com.appointment.docter_service.Service.DocterRegisterService;
-import jakarta.servlet.http.HttpServletResponse;
+import com.appointment.docter_service.Dtos.DoctorRegisterDto;
+import com.appointment.docter_service.Service.DoctorRegisterService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping()
 @AllArgsConstructor
-public class DocterRegisterController {
+public class DoctorRegisterController {
 
-    private final DocterRegisterService docterRegisterService;
+    private final DoctorRegisterService docterRegisterService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody @Valid DocterRegisterDto docterDto) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid DoctorRegisterDto docterDto) {
         System.out.println("Received registration request: " + docterDto.toString());
         try {
             docterRegisterService.register(docterDto); // Service does logic, throws error if needed
@@ -34,7 +32,7 @@ public class DocterRegisterController {
     @GetMapping("/exists/{docterId}")
     public ResponseEntity<?> isDocterExist(@PathVariable String docterId) {
         try {
-            boolean exists = docterRegisterService.isDocterExists(docterId);
+            String exists = docterRegisterService.getDoctorName(docterId);
             return ResponseEntity.ok(exists);
         } catch (Exception e) {
             e.printStackTrace();

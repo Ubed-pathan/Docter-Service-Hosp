@@ -1,7 +1,7 @@
 package com.appointment.docter_service.Service;
 
-import com.appointment.docter_service.Dtos.DocterRegisterDto;
-import com.appointment.docter_service.Entities.DocterRegisterEntity;
+import com.appointment.docter_service.Dtos.DoctorRegisterDto;
+import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Repository.DoctorRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class DocterRegisterService {
+public class DoctorRegisterService {
     
         private DoctorRepository docterRegisterRepository;
         private PasswordEncoder passwordEncoder;
 
 
-    public void register(@Valid DocterRegisterDto dto) {
+    public void register(@Valid DoctorRegisterDto dto) {
         if (docterRegisterRepository.existsByUsername(dto.username())) {
             throw new IllegalArgumentException("Username already exists.");
         }
 
-        DocterRegisterEntity docterRegisterEntity = new DocterRegisterEntity();
+        DoctorRegisterEntity docterRegisterEntity = new DoctorRegisterEntity();
         docterRegisterEntity.setUsername(dto.username());
         docterRegisterEntity.setEmail(dto.email());
         docterRegisterEntity.setPhoneNumber(dto.phoneNumber());
@@ -48,11 +48,15 @@ public class DocterRegisterService {
 
     }
 
-    public boolean isDocterExists(String docterId) {
-        if (docterId == null || docterId.isEmpty()) {
+    public String getDoctorName(String doctorId) {
+        if (doctorId == null || doctorId.isEmpty()) {
             throw new IllegalArgumentException("Doctor ID cannot be null or empty.");
         }
-        return docterRegisterRepository.existsById(docterId);
 
+        return docterRegisterRepository.findById(doctorId)
+                .map(doc -> doc.getFirstName() +
+                        (doc.getMiddleName() != null ? " " + doc.getMiddleName() : "") +
+                        " " + doc.getLastName())
+                .orElseThrow(() -> new RuntimeException("Doctor not found with ID: " + doctorId));
     }
 }
