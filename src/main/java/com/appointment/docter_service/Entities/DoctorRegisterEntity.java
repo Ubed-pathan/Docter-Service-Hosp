@@ -58,6 +58,9 @@ public class DoctorRegisterEntity {
 
     private String password;
 
+    private double rating;
+    private int reviewCount;
+
     private Boolean isPresent = true;
 
     private LocalDateTime createdAt;

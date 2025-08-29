@@ -1,6 +1,7 @@
 package com.appointment.docter_service.Service;
 
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
+import com.appointment.docter_service.Dtos.GetAllDoctorDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Repository.DoctorRepository;
 import jakarta.validation.Valid;
@@ -8,16 +9,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class DoctorRegisterService {
     
-        private DoctorRepository docterRegisterRepository;
+        private DoctorRepository doctorRegisterRepository;
         private PasswordEncoder passwordEncoder;
 
 
     public void register(@Valid DoctorRegisterDto dto) {
-        if (docterRegisterRepository.existsByUsername(dto.username())) {
+        if (doctorRegisterRepository.existsByUsername(dto.username())) {
             throw new IllegalArgumentException("Username already exists.");
         }
 
@@ -44,7 +47,7 @@ public class DoctorRegisterService {
         docterRegisterEntity.setQualification(dto.qualification());
         docterRegisterEntity.setCreatedAt(java.time.LocalDateTime.now());
         docterRegisterEntity.setLastModified(java.time.LocalDateTime.now());
-        docterRegisterRepository.save(docterRegisterEntity);
+        doctorRegisterRepository.save(docterRegisterEntity);
 
     }
 
@@ -53,10 +56,38 @@ public class DoctorRegisterService {
             throw new IllegalArgumentException("Doctor ID cannot be null or empty.");
         }
 
-        return docterRegisterRepository.findById(doctorId)
+        return doctorRegisterRepository.findById(doctorId)
                 .map(doc -> doc.getFirstName() +
                         (doc.getMiddleName() != null ? " " + doc.getMiddleName() : "") +
                         " " + doc.getLastName())
                 .orElseThrow(() -> new RuntimeException("Doctor not found with ID: " + doctorId));
+    }
+
+    public List<DoctorRegisterEntity> getAllDoctors() {
+        List<DoctorRegisterEntity> doctors = doctorRegisterRepository.findAll();
+        if (doctors.isEmpty()) {
+            throw new RuntimeException("No doctors found.");
+        }
+
+        List<GetAllDoctorDto> doctorDtos = doctors.stream().map(doc -> new GetAllDoctorDto(
+                doc.getId(),
+                doc.getFirstName() + (doc.getMiddleName() != null ? " " + doc.getMiddleName() : "") + " " + doc.getLastName(),
+                doc.getSpecialization(),
+                doc.getQualification(),
+                doc.getExperienceYears(),
+                doc.getHospitalName(),
+                doc.getHospitalAddress(),
+                doc.getAvailableTimeFrom(),
+                doc.getAvailableTimeTo(),
+                doc.getCity(),
+                doc.getState(),
+                doc.getCountry(),
+                "", // Assuming profileImageUrl is not stored in DoctorRegisterEntity
+                "", // Assuming department is not stored in DoctorRegisterEntity
+                doc.getRating(),
+                doc.getReviewCount()
+        )).toList();
+
+        return doctors;
     }
 }
