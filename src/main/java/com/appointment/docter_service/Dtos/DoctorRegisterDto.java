@@ -27,6 +27,9 @@ public record DoctorRegisterDto(
         @NotBlank(message = "Gender is required")
         String gender,
 
+        @Min(value = 1, message = "Age must be at least 1")
+        int age,
+
         @NotBlank(message = "Specialization is required")
         String specialization,
 
@@ -39,11 +42,8 @@ public record DoctorRegisterDto(
         @NotBlank(message = "License number is required")
         String licenseNumber,
 
-        @NotBlank(message = "Hospital name is required")
-        String hospitalName,
-
-        @NotBlank(message = "Hospital address is required")
-        String hospitalAddress,
+        @NotBlank(message = "Doctor address is required")
+        String doctorAddress,
 
         @NotBlank(message = "Available time from is required")
         String availableTimeFrom,

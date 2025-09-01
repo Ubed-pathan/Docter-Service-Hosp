@@ -8,8 +8,6 @@ public record GetAllDoctorDto(
         String specialization,
         String qualification,
         int experienceYears,
-        String hospitalName,
-        String hospitalAddress,
         String availableTimeFrom,
         String availableTimeTo,
         String city,

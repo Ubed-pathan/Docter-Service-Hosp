@@ -45,8 +45,8 @@ public class DoctorRegisterEntity {
     @Indexed(unique = true)
     private String licenseNumber;
 
-    private String hospitalName;
-    private String hospitalAddress;
+    private String doctorAddress;
+    private int age;
 
     private String availableTimeFrom;
     private String availableTimeTo;
