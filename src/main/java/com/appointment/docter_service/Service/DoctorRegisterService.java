@@ -115,4 +115,11 @@ public class DoctorRegisterService {
 
         return doctors;
     }
+
+    public void deleteDoctor(String docterId) {
+        if (!doctorRegisterRepository.existsById(docterId)) {
+            throw new IllegalArgumentException("Doctor with ID " + docterId + " does not exist.");
+        }
+        doctorRegisterRepository.deleteById(docterId);
+    }
 }

@@ -52,4 +52,15 @@ public class DoctorRegisterController {
             throw new RuntimeException(e);
         }
     }
+
+    @DeleteMapping("/delete/{docterId}")
+    public ResponseEntity<?> deleteDoctor(@PathVariable String docterId) {
+        try {
+            doctorRegisterService.deleteDoctor(docterId);
+            return ResponseEntity.ok("Doctor deleted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
+        }
+    }
 }
