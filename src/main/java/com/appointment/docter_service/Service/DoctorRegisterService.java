@@ -3,6 +3,7 @@ package com.appointment.docter_service.Service;
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
 import com.appointment.docter_service.Dtos.GetAllDoctorDto;
 import com.appointment.docter_service.Dtos.UserRegistrationDto;
+import com.appointment.docter_service.Dtos.DoctorUpdateDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Repository.DoctorRepository;
 import com.appointment.docter_service.clients.UserClient;
@@ -121,5 +122,14 @@ public class DoctorRegisterService {
             throw new IllegalArgumentException("Doctor with ID " + docterId + " does not exist.");
         }
         doctorRegisterRepository.deleteById(docterId);
+    }
+
+    public void updateDoctorContactInfo(String doctorId, DoctorUpdateDto updateDto) {
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findById(doctorId)
+                .orElseThrow(() -> new IllegalArgumentException("Doctor not found with id: " + doctorId));
+        doctor.setEmail(updateDto.email());
+        doctor.setPhoneNumber(updateDto.phoneNumber());
+        doctor.setDoctorAddress(updateDto.address());
+        doctorRegisterRepository.save(doctor);
     }
 }

@@ -1,6 +1,7 @@
 package com.appointment.docter_service.Controller;
 
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
+import com.appointment.docter_service.Dtos.DoctorUpdateDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Service.DoctorRegisterService;
 import jakarta.validation.Valid;
@@ -58,6 +59,19 @@ public class DoctorRegisterController {
         try {
             doctorRegisterService.deleteDoctor(docterId);
             return ResponseEntity.ok("Doctor deleted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{doctorId}")
+    public ResponseEntity<?> updateDoctor(@PathVariable String doctorId, @RequestBody @Valid DoctorUpdateDto updateDto) {
+        try {
+            doctorRegisterService.updateDoctorContactInfo(doctorId, updateDto);
+            return ResponseEntity.ok("Doctor info updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
