@@ -61,6 +61,7 @@ public class DoctorRegisterService {
                     dto.email(),
                     dto.password(),
                     dto.age(),
+                    dto.gender(),
                     dto.phoneNumber(),
                     dto.doctorAddress(),
                     dto.city(),
