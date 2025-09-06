@@ -1,5 +1,6 @@
 package com.appointment.docter_service.Controller;
 
+import com.appointment.docter_service.Dtos.AppointmentDoctorDto;
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
 import com.appointment.docter_service.Dtos.DoctorUpdateDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
@@ -36,7 +37,7 @@ public class DoctorRegisterController {
     @GetMapping("/exists/{docterId}")
     public ResponseEntity<?> isDocterExist(@PathVariable String docterId) {
         try {
-            String exists = doctorRegisterService.getDoctorName(docterId);
+            AppointmentDoctorDto exists = doctorRegisterService.getDoctorName(docterId);
             return ResponseEntity.ok(exists);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,9 +1,6 @@
 package com.appointment.docter_service.Service;
 
-import com.appointment.docter_service.Dtos.DoctorRegisterDto;
-import com.appointment.docter_service.Dtos.GetAllDoctorDto;
-import com.appointment.docter_service.Dtos.UserRegistrationDto;
-import com.appointment.docter_service.Dtos.DoctorUpdateDto;
+import com.appointment.docter_service.Dtos.*;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Repository.DoctorRepository;
 import com.appointment.docter_service.clients.UserClient;
@@ -80,16 +77,17 @@ public class DoctorRegisterService {
 
     }
 
-    public String getDoctorName(String doctorId) {
+    public AppointmentDoctorDto getDoctorName(String doctorId) {
         if (doctorId == null || doctorId.isEmpty()) {
             throw new IllegalArgumentException("Doctor ID cannot be null or empty.");
         }
 
-        return doctorRegisterRepository.findById(doctorId)
-                .map(doc -> doc.getFirstName() +
-                        (doc.getMiddleName() != null ? " " + doc.getMiddleName() : "") +
-                        " " + doc.getLastName())
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor not found with ID: " + doctorId));
+
+
+        String fullName = doctor.getFirstName() + (doctor.getMiddleName() != null ? " " + doctor.getMiddleName() : "") + " " + doctor.getLastName();
+        return new AppointmentDoctorDto(fullName, doctor.getSpecialization());
     }
 
     public List<DoctorRegisterEntity> getAllDoctors() {
