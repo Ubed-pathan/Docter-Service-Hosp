@@ -87,7 +87,7 @@ public class DoctorRegisterService {
 
 
         String fullName = doctor.getFirstName() + (doctor.getMiddleName() != null ? " " + doctor.getMiddleName() : "") + " " + doctor.getLastName();
-        return new AppointmentDoctorDto(fullName, doctor.getSpecialization());
+        return new AppointmentDoctorDto(doctor.getUsername(),fullName, doctor.getSpecialization());
     }
 
     public List<DoctorRegisterEntity> getAllDoctors() {
