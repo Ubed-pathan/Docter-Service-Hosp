@@ -131,4 +131,13 @@ public class DoctorRegisterService {
         doctor.setDoctorAddress(updateDto.address());
         doctorRegisterRepository.save(doctor);
     }
+
+    public void updateDoctorAvailability(DoctorAvailabilityDto updateDto) {
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findById(updateDto.doctorId())
+                .orElseThrow(() -> new IllegalArgumentException("Doctor not found with id: " + updateDto.doctorId()));
+        doctor.setAvailableTimeFrom(updateDto.availableTimeFrom());
+        doctor.setAvailableTimeTo(updateDto.availableTimeTo());
+        doctor.setIsPresent(updateDto.isPresent());
+        doctorRegisterRepository.save(doctor);
+    }
 }

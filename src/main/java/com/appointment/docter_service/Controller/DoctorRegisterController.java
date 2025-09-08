@@ -1,6 +1,7 @@
 package com.appointment.docter_service.Controller;
 
 import com.appointment.docter_service.Dtos.AppointmentDoctorDto;
+import com.appointment.docter_service.Dtos.DoctorAvailabilityDto;
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
 import com.appointment.docter_service.Dtos.DoctorUpdateDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
@@ -71,6 +72,19 @@ public class DoctorRegisterController {
         try {
             doctorRegisterService.updateDoctorContactInfo(doctorId, updateDto);
             return ResponseEntity.ok("Doctor info updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/updateDoctorAvailability")
+    public ResponseEntity<?> updateDoctorAvailability(@RequestBody @Valid DoctorAvailabilityDto updateDto) {
+        try {
+            doctorRegisterService.updateDoctorAvailability(updateDto);
+            return ResponseEntity.ok("Doctor availability updated successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
