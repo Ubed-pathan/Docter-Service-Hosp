@@ -1,10 +1,10 @@
 package com.appointment.docter_service.Dtos;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 public record DoctorAvailabilityDto(
         @NotBlank(message = "Doctor ID cannot be blank")
-        String doctorId,
+        String DoctorUsername,
 
         @NotBlank(message = "availableTimeFrom cannot be blank")
         String availableTimeFrom,
@@ -12,7 +12,7 @@ public record DoctorAvailabilityDto(
         @NotBlank(message = "availableTimeTo cannot be blank")
         String availableTimeTo,
 
-        @NotBlank(message = "isPresent cannot be blank")
-        boolean isPresent
+        @NotNull(message = "isPresent is required")
+        Boolean isPresent
 ) {
 }

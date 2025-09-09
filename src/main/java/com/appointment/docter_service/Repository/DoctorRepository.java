@@ -1,6 +1,7 @@
 package com.appointment.docter_service.Repository;
 
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DoctorRepository extends MongoRepository<DoctorRegisterEntity, String> {
@@ -16,4 +17,5 @@ public interface DoctorRepository extends MongoRepository<DoctorRegisterEntity, 
 
     // Method to check if an email already exists
     boolean existsByEmail(String email);
+
 }

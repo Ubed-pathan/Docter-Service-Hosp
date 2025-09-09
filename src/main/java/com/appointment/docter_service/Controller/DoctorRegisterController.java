@@ -4,6 +4,7 @@ import com.appointment.docter_service.Dtos.AppointmentDoctorDto;
 import com.appointment.docter_service.Dtos.DoctorAvailabilityDto;
 import com.appointment.docter_service.Dtos.DoctorRegisterDto;
 import com.appointment.docter_service.Dtos.DoctorUpdateDto;
+import com.appointment.docter_service.Dtos.DoctorByUsernameDto;
 import com.appointment.docter_service.Entities.DoctorRegisterEntity;
 import com.appointment.docter_service.Service.DoctorRegisterService;
 import jakarta.validation.Valid;
@@ -85,6 +86,20 @@ public class DoctorRegisterController {
         try {
             doctorRegisterService.updateDoctorAvailability(updateDto);
             return ResponseEntity.ok("Doctor availability updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    // New endpoint: get doctor by username
+    @GetMapping("/getDoctorByUsername/{username}")
+    public ResponseEntity<?> getDoctorByUsername(@PathVariable String username) {
+        try {
+            DoctorByUsernameDto dto = doctorRegisterService.getDoctorByUsername(username);
+            return ResponseEntity.ok(dto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

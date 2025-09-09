@@ -133,11 +133,35 @@ public class DoctorRegisterService {
     }
 
     public void updateDoctorAvailability(DoctorAvailabilityDto updateDto) {
-        DoctorRegisterEntity doctor = doctorRegisterRepository.findById(updateDto.doctorId())
-                .orElseThrow(() -> new IllegalArgumentException("Doctor not found with id: " + updateDto.doctorId()));
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findByUsername(updateDto.DoctorUsername());
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor not found with username: " + updateDto.DoctorUsername());
+        }
         doctor.setAvailableTimeFrom(updateDto.availableTimeFrom());
         doctor.setAvailableTimeTo(updateDto.availableTimeTo());
         doctor.setIsPresent(updateDto.isPresent());
         doctorRegisterRepository.save(doctor);
+    }
+
+    public DoctorByUsernameDto getDoctorByUsername(String username) {
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Username cannot be null or blank.");
+        }
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findByUsername(username);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor not found with username: " + username);
+        }
+        return new DoctorByUsernameDto(
+                doctor.getId(),
+                doctor.getUsername(),
+                doctor.getFirstName(),
+                doctor.getLastName(),
+                doctor.getSpecialization(),
+                doctor.getIsPresent(),
+                doctor.getAvailableTimeFrom(),
+                doctor.getAvailableTimeTo(),
+                doctor.getRating(),
+                doctor.getReviewCount()
+        );
     }
 }
