@@ -65,14 +65,12 @@ public class DoctorRegisterService {
                     dto.state(),
                     dto.country(),
                     dto.zipCode()
-                    );
+            );
 
             userClient.registerUser(user);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -87,7 +85,7 @@ public class DoctorRegisterService {
 
 
         String fullName = doctor.getFirstName() + (doctor.getMiddleName() != null ? " " + doctor.getMiddleName() : "") + " " + doctor.getLastName();
-        return new AppointmentDoctorDto(doctor.getUsername(),fullName, doctor.getSpecialization());
+        return new AppointmentDoctorDto(doctor.getUsername(), fullName, doctor.getSpecialization());
     }
 
     public List<DoctorRegisterEntity> getAllDoctors() {
@@ -129,6 +127,13 @@ public class DoctorRegisterService {
         doctor.setEmail(updateDto.email());
         doctor.setPhoneNumber(updateDto.phoneNumber());
         doctor.setDoctorAddress(updateDto.address());
+        doctor.setFirstName(updateDto.firstName());
+        doctor.setMiddleName(updateDto.middleName());
+        doctor.setLastName(updateDto.lastName());
+        doctor.setAge(updateDto.age());
+        doctor.setCity(updateDto.city());
+        doctor.setState(updateDto.state());
+        doctor.setZipCode(updateDto.zipCode());
         doctorRegisterRepository.save(doctor);
     }
 
@@ -152,16 +157,25 @@ public class DoctorRegisterService {
             throw new IllegalArgumentException("Doctor not found with username: " + username);
         }
         return new DoctorByUsernameDto(
-                doctor.getId(),
-                doctor.getUsername(),
-                doctor.getFirstName(),
-                doctor.getLastName(),
+                doctor.getId(), doctor.getUsername(),
+                doctor.getFirstName(), doctor.getMiddleName(),
+                doctor.getLastName(), doctor.getAge(),
+                doctor.getGender(), doctor.getEmail(),
+                doctor.getPhoneNumber(),
                 doctor.getSpecialization(),
+                doctor.getQualification(),
+                doctor.getExperienceYears(),
+                doctor.getDoctorAddress(),
+                doctor.getCity(),
+                doctor.getState(),
+                doctor.getCountry(),
+                doctor.getZipCode(),
                 doctor.getIsPresent(),
                 doctor.getAvailableTimeFrom(),
                 doctor.getAvailableTimeTo(),
                 doctor.getRating(),
-                doctor.getReviewCount()
+                doctor.getReviewCount(),
+                doctor.getCreatedAt()
         );
     }
 }
