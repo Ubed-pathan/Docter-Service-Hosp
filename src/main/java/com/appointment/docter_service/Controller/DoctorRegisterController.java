@@ -107,4 +107,17 @@ public class DoctorRegisterController {
             return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
         }
     }
+
+    @PatchMapping("/updateDoctorPresentyStatus/{username}")
+    public ResponseEntity<?> updateDoctorPresentyStatus(@PathVariable String username) {
+        try {
+            doctorRegisterService.updateDoctorPresentyStatus(username);
+            return ResponseEntity.ok("Doctor presenty status updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Something went wrong: " + e.getMessage());
+        }
+    }
 }

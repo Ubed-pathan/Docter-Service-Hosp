@@ -178,4 +178,13 @@ public class DoctorRegisterService {
                 doctor.getCreatedAt()
         );
     }
+
+    public void updateDoctorPresentyStatus(String username) {
+        DoctorRegisterEntity doctor = doctorRegisterRepository.findByUsername(username);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor not found with username: " + username);
+        }
+        doctor.setIsPresent(!doctor.getIsPresent());
+        doctorRegisterRepository.save(doctor);
+    }
 }
